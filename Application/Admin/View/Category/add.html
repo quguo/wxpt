@@ -1,0 +1,116 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+
+<div class="am-cf admin-main">
+
+	<!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+<div class="admin-content">
+
+  <div class="am-cf am-padding">
+    <include file="Public:location" />
+  </div>
+    <div class="am-u-md-8">
+      <form  class="am-form" id="form">
+          <fieldset>
+            <div class="am-form-group">
+              
+              
+              <label for="doc-select-1">所属分类</label>
+              <select id="doc-select-1" required name="pid" >
+                <option value="">-=请选择一项=-</option>
+                <option value="0" <if condition="$info[pid] eq 0"> selected </if>>顶级栏目</option>
+                <foreach name="catelist" item="vo">
+                   <option value="<{$vo.id}>" <if condition="$vo[id] eq $info[pid]"> selected </if>><{$vo.cname}></option>
+                </foreach>
+              </select>
+            </div>
+
+            <div class="am-form-group">
+              <label for="doc-vld-name-2">分类名称:</label>
+              <input type="text" name="title" value="<{$info.title}>" id="doc-vld-name-2" minlength="3" placeholder="输入分类名（至少 3 个字符）" required/>
+            </div>
+        
+            
+        
+            
+        
+            <div class="am-form-group">
+              <label>显示/隐藏： </label>
+              <label class="am-radio-inline">
+                <input type="radio"  value="1" name="status" required     <empty name="$info">checked</empty>  <if condition="$info[status] eq 1"> checked </if>> 显示
+              </label>
+              <label class="am-radio-inline">
+                <input type="radio" value="0" name="status" <if condition="($info[status] eq 0) and $info"> checked </if>> 隐藏
+              </label>
+
+            </div>
+            <input type="hidden" name="id" value="<{$info.id}>">
+            <button  type="submit" id="act" class="am-btn am-btn-primary btn-loading-example" data-am-loading="{spinner: 'circle-o-notch', loadingText: '提交中...', resetText: '提交'}">提交</button>
+          </fieldset>
+      </form>
+  </div>
+</div>
+    
+
+<!-- content end -->
+<include file="Public:callback" />
+<include file="Public:loading" />
+</div>
+
+<include file="Public:footer" />
+<script type="text/javascript">
+  $(function(){
+    $('#form').validator({
+      submit:  function(e) {
+          var isFormValid = this.isFormValid();
+          if(isFormValid == false){
+            return false;
+          }
+          //异步处理表单添加
+          var data = $("#form").serialize();
+          var $btnObj = $("#act");
+          var $loadObj = $("#loading");
+          var $callbackObj = $("#callback");
+          $.ajax({
+            data:data,
+            dataType:"json",
+            type:"post",
+            cache:false,
+            beforeSend:function(){
+              //btnObj.button("loading");
+              $loadObj.modal();
+            },
+            url:"<{:U("Admin/Category/save")}>",
+            
+            success:function(e){
+              // btnObj.button('reset');
+              $loadObj.modal("close");
+              $(".callback-bd").html(e.info);
+              $callbackObj.modal();
+            }
+          })
+          return false;
+        }
+    });
+  })
+</script>
+
+</body>
+</html>
+

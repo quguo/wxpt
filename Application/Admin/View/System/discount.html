@@ -1,0 +1,171 @@
+<!doctype html>
+<html class="no-js">
+<head>
+ <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+
+<div class="am-cf admin-main">
+
+  <!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <include file="Public:location" />
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-sm-12 am-u-md-6">
+        <div class="am-btn-toolbar">
+          <div class="am-btn-group am-btn-group-xs">
+            <a href="__URL__/addDiscount" class="am-btn am-btn-default"><span class="am-icon-plus"></span> 新增折扣</a>
+            <!--<a href="javascript:;" class="am-btn am-btn-default"><span class="am-icon-save"></span> 删除店铺</a>
+            -->
+          </div>
+        </div>
+      </div>
+      <!--<div class="am-u-sm-12 am-u-md-3">
+        <div class="am-form-group">
+          <select data-am-selected="{btnSize: 'sm'}">
+            <foreach name="column" item="vo">
+            <option value="option1"><{$vo.name}></option>
+            </foreach>
+          </select>
+        </div>
+      </div>
+      <div class="am-u-sm-12 am-u-md-3">
+        <div class="am-input-group am-input-group-sm">
+          <input type="text" class="am-form-field">
+          <span class="am-input-group-btn">
+            <button class="am-btn am-btn-default" type="button">搜索</button>
+          </span>
+        </div>
+      </div>-->
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <form class="am-form">
+          <table class="am-table am-table-striped am-table-hover table-main">
+            <thead>
+              <tr>
+                <th class="table-check"><input type="checkbox" /></th><th class="table-id">#</th><th class="table-title">折扣名</th><th class="table-type">数值</th><th class="table-set">状态</th><th class="table-type">操作</th>
+              </tr>
+          </thead>
+          <tbody>
+
+         
+      <foreach name="data" item="vo" key="key">
+              <tr id="<{$vo.id}>">
+                <td><input type="checkbox" value="<{$vo.id}>" /></td>
+                <td><{$key}></td>
+                <td><{$vo.title}></td>
+                <td><{$vo.value}></td>
+                <td><if condition="$vo[status] eq 1">开启中<else/>关闭了</if></td>
+                
+                <td >
+                  <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                      <a href="__URL__/discountEdit/id/<{$vo.id}>" class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</a>
+                      
+                      <a href="javascript:;" onclick="rulesDel(<{$vo.id}>)" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only my-confirm"><span class="am-icon-trash-o"></span> 删除</a>
+                    </div>
+                  </div>
+                </td>
+
+
+              </tr>
+           </foreach>
+          </tbody>
+        </table>
+          <!--<div class="am-cf">
+  共 15 条记录
+  <div class="am-fr">
+    <ul class="am-pagination">
+      <li class="am-disabled"><a href="#">«</a></li>
+      <li class="am-active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+  </div>
+</div>
+          <hr />
+          <p>注：.....</p>-->
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public:footer" />
+
+<div class="am-modal am-modal-confirm" tabindex="-1" id="my-confirm">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">系统提示</div>
+    <div class="am-modal-bd">
+      你，确定要删除这条记录吗?
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+    </div>
+  </div>
+</div>
+
+<include file="Public:callback" />
+
+
+
+</body>
+<script type="text/javascript">
+  //规则删除
+
+  function rulesDel(val){
+
+    $(".am-modal-bd").html("是否要删除?"+val)
+      $('#my-confirm').modal({
+            relatedTarget: this,
+            onConfirm: function(options) {
+              $.post("__URL__/delRoom",{id:val},function(data){
+                if(data.status == 0){
+                  $(".am-modal-bd").html(data.info)
+                  $("#callback").modal()
+                }
+                else{
+                 
+                  $(".am-modal-bd").html(data.info)
+                  $("#callback").modal()
+                   
+                }
+              })
+            },
+           
+        });
+  }
+
+  $(function(){
+     $("#callback").on('closed.modal.amui',function(){
+        window.location='__URL__/index'
+      })
+  })
+</script>
+</html>
+

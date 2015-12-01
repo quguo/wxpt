@@ -1,0 +1,116 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <include file="Public:Meta" />
+  <include file="Public:Resources" />
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+
+<div class="am-cf admin-main">
+
+  <!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <include file="Public:location" />
+    </div>
+    
+    <div class="am-g">
+      <div class="am-u-sm-12 am-u-md-6">
+        <div class="am-btn-toolbar">
+          <div class="am-btn-group am-btn-group-xs">
+          
+            
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+   
+    
+  <form class="am-form am-form-horizontal" id="Form">
+    
+    <div class="am-u-md-12">
+    
+       
+       
+        <div class="am-form-group">
+          <label for="doc-ipt-6" class="am-u-sm-2 am-form-label" style="text-align:right">预警数值</label>
+          <div class="am-u-sm-3">
+             <input type="text" name="early" value="<{$data}>">
+
+          </div>
+          <div class="am-u-sm-7"></div>
+        </div>
+
+        <div class="am-form-group">
+         <label for="doc-ipt-6" class="am-u-sm-2 am-form-label" style="text-align:right"></label>
+          <div class="am-u-sm-3">
+            <a href="javascript:;" class="am-btn am-btn-success am-btn-xs" id="add">提交</a>
+          </div>
+          <div class="am-u-sm-7"></div>
+        </div>
+
+    </div>    
+  </form>
+     
+  
+  <!-- content end -->
+
+</div>
+
+</div>
+
+
+<include file="Public:footer" />
+
+
+
+<include file="Public:callback" />
+
+
+
+</body>
+<script type="text/javascript">
+  
+  $(function(){
+    $("#add").click(function(){
+     
+      var data = $("#Form").serialize();
+      $.post("<{:U("Admin/System/early")}>",data,function(data){
+        if(data.status == 0){
+          $(".am-modal-bd").html(data.info);
+          $("#callback").modal()
+          $("#status").val("0")
+        }
+        else{
+          $(".am-modal-bd").html(data.info);
+          $("#status").val("1")
+          $("#callback").modal()
+          
+        }
+      })
+    })
+      $("#callback").on('closed.modal.amui',function(){
+        var status = $("#status").val();
+        if(status != 0){
+          window.location='__URL__/early'
+        }
+      })
+
+
+  })
+</script>
+</html>
+

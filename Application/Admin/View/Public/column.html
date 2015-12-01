@@ -1,0 +1,53 @@
+
+<!-- sidebar start -->
+
+  <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+        
+        <foreach name="column" item="vo">
+          <if condition = "$vo['id'] eq 32">
+            <li class="" <if condition="$vo['auth'] eq 0">style="display:none"</if>><a class="am-cf" href="<{:U('Admin/Index/index')}>"> <{$vo.name}> </a></li>
+            <else/>
+            <li class="admin-parent" style="<if condition="$vo['auth'] eq 0">display:none</if>">
+              <a class="am-cf" data-am-collapse="{target: '#<{$vo.id}>'}"> <{$vo.name}> <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+        
+              <ul class="am-list am-collapse admin-sidebar-sub " id="<{$vo.id}>">
+                <foreach name="vo['child']" item="voChild">
+
+                 <li style="<if condition="$voChild['auth'] eq 0">display:none</if>"><a href="<{$voChild.url}>" class="am-cf">
+                  
+
+                      <{$voChild.name}>
+                      <if condition="$voChild['c'] eq $nowModule">
+                        <script type="text/javascript">
+                        jQuery(function(){
+                          $("#"+<{$vo.id}>).addClass("am-in")
+                        });
+                       </script>
+                      </if></a>
+                </li>
+                </foreach>
+              </ul>
+            </li>
+          </if>
+			     
+        </foreach>
+      </ul>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 公告</p>
+          <p></p>
+        </div>
+      </div>
+
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-tag"></span> 信息</p>
+          <p></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- sidebar end -->

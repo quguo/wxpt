@@ -1,0 +1,161 @@
+<!doctype html>
+<html class="no-js">
+<head>
+ <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+<div class="am-cf admin-main">
+
+	<!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+  <div class="admin-content">
+
+    <div class="am-cf am-padding">
+      <include file="Public:location" />
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <form class="am-form-inline" role="form" action="">
+
+          <div class="am-form-group">
+            <select data-am-selected="{btnSize: 'md'}" name = "rid" id="select">
+              <option value="0">请选择主题</option>
+              <foreach name="room" item="vo">
+                <option value="<{$vo.id}>"><{$vo.name}></option>
+              </foreach>
+            </select>
+          </div>
+    
+          <div class="am-form-group">
+           <input type="text" class="am-form-field" data-am-datepicker="{format: 'yyyy-mm-dd', viewMode: 'years', minViewMode: 'day'}" placeholder="选择日期" readonly="" name="date" >
+          </div>
+
+          <div class="am-form-group">
+            <button class="am-btn am-btn-success">搜索</botton>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <form class="am-form">
+          <table class="am-table am-table-striped am-table-hover table-main">
+            <thead>
+              <tr>
+                <th class="table-check"><input type="checkbox" /></th><th class="table-id">#</th><th class="table-title">店铺名称</th><th class="table-type">小票类型</th><th class="table-type">房间</th><th class="table-type">打印日期</th><th class="table-type">金额</th><th class="table-type">已重复打印(次)</th><th class="table-set">操作</th>
+              </tr>
+          </thead>
+          <tbody>
+
+         
+			<foreach name="data" item="vo" key="key">
+          
+	            <tr>
+	              <td><input type="checkbox" value="<{$vo.id}>" /></td>
+	              <td><{$key}></td>
+	              <td><{$vo[shop][name]}></td>
+                <td><if condition="$vo['type'] eq 1">零食<elseif condition="$vo[type] eq 2" />售票<else />游戏卡充值</if></td>
+                <td><if condition="$vo[room][name]"><{$vo[room][name]}><else/>/</if></td>
+                
+	              <td><{$vo.createtime|date="Y-m-d H:i:s",###}></td>
+                <td><{$vo.jine}> 元</td>
+	              <td><{$vo.count}></td>
+	              <td>
+	                <div class="am-btn-toolbar">
+	                  <div class="am-btn-group am-btn-group-xs">
+	                    <a href="javascript:;" class="am-btn am-btn-default am-btn-xs am-text-secondary" onclick="printer(<{$vo.id}>)"><span class="am-icon-pencil-square-o" ></span> 重打</a>
+	                  </div>
+	                </div>
+	              </td>
+	            </tr>
+
+           </foreach>
+          </tbody>
+        </table>
+          <!--<div class="am-cf">
+  共 15 条记录
+  <div class="am-fr">
+    <ul class="am-pagination">
+      <li class="am-disabled"><a href="#">«</a></li>
+      <li class="am-active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+  </div>
+</div>
+          <hr />
+          <p>注：.....</p>-->
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- content end -->
+
+</div>
+
+<include file="Public:footer" />
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-prompt">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">系统提示</div>
+    <div class="am-modal-bd">
+      需要打多少张?
+      <input type="text" class="am-modal-prompt-input">
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+      <span class="am-modal-btn" data-am-modal-confirm>提交</span>
+    </div>
+  </div>
+</div>
+
+<include file="Public:callback" />
+
+</body>
+<script type="text/javascript">
+  //规则删除
+
+  function printer(val){
+      $('#my-prompt').modal({
+      relatedTarget: this,
+      onConfirm: function(e) {
+        var cishu =  e.data;
+        var id = val;
+        if(cishu > 0){
+          $.post("__URL__/printerlog",{cishu:cishu,id:id},function(data){
+
+          });
+        }
+      },
+      
+    });
+  }
+
+  $(function(){
+     $("#callback").on('closed.modal.amui',function(){
+        var status = $("#status").val();
+        if(status != 0){
+          window.location='__URL__/index'
+        }
+      })
+  })
+</script>
+</html>
+

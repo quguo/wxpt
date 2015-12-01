@@ -1,0 +1,68 @@
+[ 2015-12-01T14:27:24+08:00 ] ::1 /wxpt/index.php/Admin/Login/do_login.html
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000450s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001042s ]
+SQL: SHOW COLUMNS FROM `think_admin` [ RunTime:0.0067s ]
+SQL: SELECT * FROM `think_admin` WHERE `name` = 'vivi888' AND `pwd` = 'ddd191cdb69c2f541180db247ad60a2543a9dbc3' LIMIT 1   [ RunTime:0.0003s ]
+
+[ 2015-12-01T14:27:36+08:00 ] ::1 /wxpt/index.php/Admin/Login/do_login.html
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000828s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001444s ]
+SQL: SHOW COLUMNS FROM `think_admin` [ RunTime:0.0070s ]
+SQL: SELECT * FROM `think_admin` WHERE `name` = 'liangjinbiao' AND `pwd` = '68e5abea520c72c036fc902da59912f455c5ee5d' LIMIT 1   [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: title /Applications/XAMPP/xamppfiles/htdocs/wxpt/Application/Admin/Controller/LoginController.class.php 第 33 行.
+NOTIC: [8] Undefined index: sid /Applications/XAMPP/xamppfiles/htdocs/wxpt/Application/Admin/Controller/LoginController.class.php 第 34 行.
+
+[ 2015-12-01T14:35:46+08:00 ] ::1 /wxpt/index.php/Admin/User/index.html
+ERR: 无法加载控制器:User
+
+[ 2015-12-01T14:36:11+08:00 ] ::1 /wxpt/index.php/Admin/Category/save.html
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000759s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001342s ]
+SQL: SHOW COLUMNS FROM `think_column` [ RunTime:0.0188s ]
+SQL: SELECT * FROM `think_column` WHERE `status` = 1 ORDER BY pid,level  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `think_auth_group_access` [ RunTime:0.0025s ]
+SQL: SELECT * FROM think_auth_group_access a INNER JOIN think_auth_group g on a.group_id=g.id  WHERE ( a.uid='2' )  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `think_auth_rule` [ RunTime:0.0024s ]
+SQL: SELECT * FROM `think_auth_rule` WHERE `id` IN ('5','6','7','8','41','42','43','44','45','46','47','48','49','141','140')  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `think_category` [ RunTime:0.0039s ]
+SQL: INSERT INTO `think_category` (`pid`,`title`,`status`) VALUES ('0','test','0') [ RunTime:0.0032s ]
+SQL: SELECT * FROM `think_category` ORDER BY pid desc  [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: create /Applications/XAMPP/xamppfiles/htdocs/wxpt/Application/Admin/Controller/CategoryController.class.php 第 32 行.
+
+[ 2015-12-01T14:58:09+08:00 ] ::1 /wxpt/index.php/Admin/Rbac/addRules
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000813s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001124s ]
+SQL: SHOW COLUMNS FROM `think_column` [ RunTime:0.0038s ]
+SQL: SELECT * FROM `think_column` WHERE `status` = 1 ORDER BY pid,level  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `think_auth_group_access` [ RunTime:0.0027s ]
+SQL: SELECT * FROM think_auth_group_access a INNER JOIN think_auth_group g on a.group_id=g.id  WHERE ( a.uid='2' )  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `think_auth_rule` [ RunTime:0.0019s ]
+SQL: SELECT * FROM `think_auth_rule` WHERE `id` IN ('5','6','7','8','41','42','43','44','45','46','47','48','49','141','140')  [ RunTime:0.0006s ]
+SQL: SHOW COLUMNS FROM `think_auth_rule` [ RunTime:0.0027s ]
+SQL: INSERT INTO `think_auth_rule` (`title`,`name`,`pid`) VALUES ('Spitert管理','Admin/Spiter/index','92') [ RunTime:0.0035s ]
+
+[ 2015-12-01T14:58:14+08:00 ] ::1 /wxpt/index.php/Admin/Rbac/groupEdit
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000458s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000792s ]
+SQL: SHOW COLUMNS FROM `think_column` [ RunTime:0.0060s ]
+SQL: SELECT * FROM `think_column` WHERE `status` = 1 ORDER BY pid,level  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `think_auth_group_access` [ RunTime:0.0027s ]
+SQL: SELECT * FROM think_auth_group_access a INNER JOIN think_auth_group g on a.group_id=g.id  WHERE ( a.uid='2' )  [ RunTime:0.0007s ]
+SQL: SHOW COLUMNS FROM `think_auth_rule` [ RunTime:0.0023s ]
+SQL: SELECT * FROM `think_auth_rule` WHERE `id` IN ('5','6','7','8','41','42','43','44','45','46','47','48','49','141','140')  [ RunTime:0.0005s ]
+NOTIC: [8] Use of undefined constant id - assumed 'id' /Applications/XAMPP/xamppfiles/htdocs/wxpt/Application/Admin/Controller/RbacController.class.php 第 49 行.
+NOTIC: [8] Undefined variable: arr /Applications/XAMPP/xamppfiles/htdocs/wxpt/Application/Admin/Common/function.php 第 77 行.
+SQL: SHOW COLUMNS FROM `think_auth_group` [ RunTime:0.0027s ]
+SQL: UPDATE `think_auth_group` SET `title`='超级管理员',`rules`='5,6,7,8,41,42,43,44,45,46,47,48,49,141,140,142' WHERE `id` = 17 [ RunTime:0.0029s ]
+
+[ 2015-12-01T14:58:19+08:00 ] ::1 /wxpt/index.php/Admin/Spiter/index.html
+ERR: 无法加载控制器:Spiter
+
+[ 2015-12-01T15:03:26+08:00 ] ::1 /wxpt/index.php/Admin/Spiter/index.html
+ERR: 模板不存在:./Application/Admin/View/Spiter/index.html
+

@@ -1,0 +1,141 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+  <link rel="stylesheet" href="__PUBLIC__/assets/css/amazeui.datetimepicker.css">
+    <script src="__PUBLIC__/assets/js/amazeui.datetimepicker.zh-CN.js"></script>
+
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+
+<div class="am-cf admin-main">
+
+  <!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+<div class="admin-content">
+
+  <div class="am-cf am-padding">
+    <include file="Public:location" />
+  </div>
+
+  <div class="am-tabs am-margin" data-am-tabs>
+    <ul class="am-tabs-nav am-nav am-nav-tabs">
+      <li class="am-active"><a href="#tab1">基本信息</a></li>
+     
+    </ul>
+    
+    <div class="am-tabs-bd">
+
+      <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+        
+        <form action="" class="am-form am-form-inline" id="Form">
+
+           
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            充值金额
+          </div>
+          <div class="am-u-sm-8 am-u-md-10">
+           
+              <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" placeholder="充值金额" name="recharge" value="<{$info.recharge}>">
+              </div>
+            
+          </div>
+        </div>
+
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            赠送金额
+          </div>
+          <div class="am-u-sm-8 am-u-md-10">
+           
+              <div class="am-form-group">
+                <input type="text" class="am-form-field am-input-sm" placeholder="赠送金额" name="give" value="<{$info.give}>">
+              </div>
+            
+          </div>
+        </div>
+
+
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-4 am-u-md-2 am-text-right">状态</div>
+          <div class="am-u-sm-8 am-u-md-10">
+            <div class="am-btn-group" data-am-button>
+              <label class="am-btn am-btn-default am-btn-xs  <if condition="$info[status] eq 1">am-active</if>">
+                <input type="radio" name="status" id="option1" value="1" <if condition="$info[status] eq 1">  checked="checked" </if>> 启用
+              </label>
+              <label class="am-btn am-btn-default am-btn-xs <if condition="$info[status] eq 0">am-active</if>">
+                <input type="radio" name="status" id="option2" value="0" <if condition="$info[status] eq 0">  checked="checked"</if>> 禁用
+              </label>
+              <input type="hidden" name="id" value="<{$info.id}>">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="am-margin">
+    <a href="javascript:;" class="am-btn am-btn-primary am-btn-xs" id="add">提交保存</a>
+    <button type="button" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+  </div></form>
+</div>
+<!-- content end -->
+</div>
+<include file="Public:footer" />
+
+
+<include file="Public:callback" />
+  <script type="text/javascript">
+  $(function(){
+     
+      $("#add").click(function(){
+        $(".am-modal-bd").html(" ");
+        var value = $("#Form").serialize();
+        $.ajax({
+          url:'__URL__/editMemberConfig',
+          data:value,
+          dataType:'json',
+          success:function(data){
+             if(data.status == 0){
+              $(".am-modal-bd").html(data.info);
+              $("#callback").modal()
+              $("#status").val("0")
+            }
+            else{
+              $(".am-modal-bd").html(data.info);
+              $("#status").val("1")
+              $("#callback").modal()
+              
+            }
+          },
+          type:'POST',
+          timeout:1000,
+          error:function(){
+            alert("网络出错...")
+          }
+        })
+      })
+
+    $("#callback").on('closed.modal.amui',function(){
+        var status = $("#status").val();
+        if(status != 0){
+          window.location='__URL__/memberConfig'
+        }
+      })
+  })
+  </script>
+</body>
+</html>
+

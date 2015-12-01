@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+
+</head>
+<body>
+<div class="am-modal am-modal-alert" tabindex="-1" id="auth">
+  <div class="am-modal-dialog">
+    <div class="am-modal-hd">系统提示</div>
+    <div class="am-modal-bd">
+      
+      <empty name="msg">你所属用户组还没有该权限!  :( </empty>
+      <notempty name="msg"><{$msg}></notempty>
+    </div>
+    <div class="am-modal-footer">
+      <span class="am-modal-btn">确定</span>
+    </div>
+  </div>
+</div>
+</body>
+<script type="text/javascript">
+  $(function(){
+
+    $("#auth").modal()
+    
+    $("#auth").on('closed.modal.amui',function(){
+        history.back()
+      })
+  })
+</script>
+</html>
+

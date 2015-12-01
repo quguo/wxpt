@@ -1,0 +1,117 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <include file="Public:Meta" />
+  <!--引入资源文件-->
+  <include file="Public:Resources" />
+  <style>
+    
+  </style>
+</head>
+<body>
+
+<!--[if lte IE 9]>
+<p class="browsehappy">你正在使用<strong>过时</strong>的浏览器，Amaze UI 暂不支持。 请 <a href="http://browsehappy.com/" target="_blank">升级浏览器</a>
+  以获得更好的体验！</p>
+<![endif]-->
+
+<include file="Public:top" />
+<div class="am-cf admin-main">
+
+	<!--引入左侧菜单文件-->
+  <include file="Public:column" />
+
+    <!-- content start -->
+<div class="admin-content">
+
+  <div class="am-cf am-padding">
+   <include file="Public:location" />
+  </div>
+
+  <div class="am-tabs am-margin" data-am-tabs>
+    <ul class="am-tabs-nav am-nav am-nav-tabs">
+      <li class="am-active"><a href="#tab1">基本信息</a></li>
+     
+    </ul>
+  <form action="" id="addGroup" >
+    <div class="am-tabs-bd">
+      <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-4 am-u-md-2 am-text-right">
+            用户组名称
+          </div>
+          <div class="am-u-sm-8 am-u-md-10">
+            <form action="" class="am-form am-form-inline">
+              <div class="am-form-group">
+                <input type="hidden" value="<{$info.id}>" name="id">
+                <input type="text" class="am-form-field am-input-sm" placeholder="" name="title" value="<{$info.title}>">
+              </div>
+            </form>
+          </div>
+        </div>
+        <foreach name="arr" item="vo">
+          <div class="am-g am-margin-top" >
+            <div class="am-u-sm-4 am-u-md-2 am-text-right"><{$vo.name}>权限</div>
+            <div class="am-u-sm-8 am-u-md-10" style="margin-bottom:10px;">
+              <div class="am-btn-group" data-am-button>
+                <foreach name="vo[child]" item="v">
+                  <label class="btnlist am-btn am-btn-primary am-btn-xs <{:inArray($v['id'],$rules,"am-active")}> " style="margin-bottom:5px;margin-right:5px; ">
+                    <input type="checkbox" name="list[]" value="<{$v.id}>" <{:inArray($v['id'],$rules,"checked='true' ")}>> <{$v.title}> 
+                    
+                  </label>
+                </foreach>
+              </div>
+            </div>
+          </div>
+        </foreach>
+      </div>
+    </div>
+    
+  </form>
+  </div>
+
+  <div class="am-margin">
+    <a href="javascript:;" class="am-btn am-btn-primary am-btn-xs" id="add">提交保存</a>
+    <button type="button" class="am-btn am-btn-primary am-btn-xs">放弃保存</button>
+  </div>
+  
+</div>
+<!-- content end -->
+<include file="Public:callback" />
+
+</div>
+
+<include file="Public:footer" />
+<script type="text/javascript">
+  $(function(){
+    /*$(".btnlist").click(function(){
+      if(!$(this).hasClass("am-active")){
+        $(this).css("background-color","#ccc");
+      }else{
+         $(this).css("background-color","#0c80ba");
+      }
+    })*/
+    $("#add").click(function(){
+        var val = $("#addGroup").serializeArray();
+        $.post("__URL__/groupEdit",val,function(data){
+          if (data.status == 0) {
+              $(".am-modal-bd").html(data.info);
+              $("#callback").modal();
+          }else{
+              $(".am-modal-bd").html(data.info);
+              $("#callback").modal();
+          }
+        })
+       
+    })
+
+     $("#callback").on('closed.modal.amui',function(){
+        window.location='__URL__/listGroup'
+      })
+
+  })
+</script>
+
+</body>
+</html>
+
